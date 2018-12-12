@@ -17,19 +17,6 @@
 -->
 <html>
     <head>
-        <!--
-        Customize this policy to fit your own app's needs. For more guidance, see:
-            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
-        Some notes:
-            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
-            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
-            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
-                * Enable inline JS: add 'unsafe-inline' to default-src
-        -->
-        <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-
-        <meta http-equiv="Content-Security-Policy" content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
-        -->
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
@@ -48,9 +35,7 @@
         <!-- Routing  -->
 
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
-        <link rel="stylesheet" href="/static/routing/leaflet-routing-machine.css"/>
         <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-        <script src="/static/routing/leaflet-routing-machine.js"></script>
 
         <!-- Map  -->
         <script src="https://cdn.jsdelivr.net/leaflet.awesome-markers/2.0.2/leaflet.awesome-markers.min.js"></script>
@@ -62,9 +47,6 @@
               href="https://cdn.jsdelivr.net/leaflet.geosearch/0.1/css/l.geosearch.css">
         <!-- CSS  -->
         <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-        <link rel="stylesheet" href="/static/css/materialize.css"/>
-        <link rel="stylesheet" href="/static/css/style.css"/>
-
         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
         <link rel="stylesheet" href="js/leaflet-routing-machine.css"/>
         <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
@@ -82,13 +64,13 @@
     <body>
     <div data-role="page" id="main">
             <div id="map-box">
-                <div id="map" style="height: 600px; width:97%;"></div>
+                <div id="map" style="height: 600px; width:100%;"></div>
             </div>
 
         <div id="move_map"></div>
         </div>
 
-    <table id="example" class="display" data-order='[[ 2, "asc" ]]' cellspacing="0" width="100%">
+    <table id="example" class="responsive-table" data-order='[[ 2, "asc" ]]' cellspacing="0" width="100%">
 
     </table>
 

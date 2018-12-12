@@ -16,10 +16,10 @@
  * specific language governing permissions and limitations
  * under the License.
  */
- var been_routed = false;
- var routing = '';
- var route ='';
- const proxyurl = "https://cors-anywhere.herokuapp.com/";
+let been_routed = false;
+let routing = '';
+let route = '';
+const proxyurl = "https://cors-anywhere.herokuapp.com/";
 function route_to_station(users_lat_coords1, users_lng_coords1, x1, y1) {
                 users_lat_coords = users_lat_coords1;
                 users_lng_coords = users_lng_coords1;
@@ -64,19 +64,18 @@ function pos() {
 function showPosition(position) {
 
     //Set the map view to be the users location
-                //
-                map = L.map('map').setView([position.coords.latitude, position.coords.longitude], 14);
-                L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-                    attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                }).addTo(map);
+    map = L.map('map').setView([position.coords.latitude, position.coords.longitude], 14);
+    //set the map to the index page
+    L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+    }).addTo(map);
 
-                //Change the users marker to a unique red & show users location on click
-                //
-                L.marker([position.coords.latitude, position.coords.longitude], {
-                    icon: L.AwesomeMarkers.icon({prefix: 'fa', markerColor: 'red'})
-                }).addTo(map).bindPopup("<b>Your location: </b>" + position.coords.latitude + "," + position.coords.longitude);
+    //Change the users marker to a unique red & show users location on click
+    L.marker([position.coords.latitude, position.coords.longitude], {
+        icon: L.AwesomeMarkers.icon({icon: 'home', prefix: 'glyphicon', markerColor: 'red'})
+    }).addTo(map).bindPopup("<b>Your location: </b>" + position.coords.latitude + "," + position.coords.longitude);
 
-                setTimeout(function(){ map.invalidateSize()}, 400);
+    setTimeout(function(){ map.invalidateSize()}, 400);
     var lat;
     var lng;
 
@@ -87,50 +86,41 @@ let dataSet = [];
         data:{'lat':position.coords.latitude,'long':position.coords.longitude},
         success: function (bike_data) {
         alert('Stations have been loaded');
+            let splitting;
             for (i in bike_data['0']) {
-            let row = [];
-                            a = bike_data;
-                            //Find coords of bike station
+                let row = [];
+                a = bike_data;
+                //Find coords of bike station
 
-                            coords = a['0'][i]['fields']['position'];
+                coords = a['0'][i]['fields']['position'];
 
-                            //Regex for seperating lat and lng into a variable
+                //Regex for seperating lat and lng into a variable
 
-                            let regExp = /\(([^)]+)\)/;
-                            let matches = regExp.exec(coords);
+                let regExp = /\(([^)]+)\)/;
+                let matches = regExp.exec(coords);
 
-                            //matches[1] contains the value between the parentheses
+                //matches[1] contains the value between the parentheses
 
-                            splitting = matches[1].split(" ");
-                            lng = splitting[0];
-                            lat = splitting[1];
+                splitting = matches[1].split(" ");
+                lng = splitting[0];
+                lat = splitting[1];
 
-                            //Pushing data to a list for displaying later
+                //Pushing data to a list for displaying later
 
-                            row.push(a['0'][i]['pk']);
-                            row.push(a['0'][i]['fields']['stand_name']);
-                            row.push(a['0'][i]['distance']);
-                            row.push(a['0'][i]['fields']['available_bikes']);
+                row.push(a['0'][i]['pk']);
+                row.push(a['0'][i]['fields']['stand_name']);
+                row.push(a['0'][i]['distance']);
+                row.push(a['0'][i]['fields']['available_bikes']);
 
-                            //Pushing all bike data station details to the datatables view
+                //Pushing all bike data station details to the datatables view
 
-                            dataSet.push(row);
-            //create the marker for the bike station
-            L.marker([lat,lng]).addTo(map).bindPopup("<hr><b>Number: </b>"+ a['0'][i]['pk'] +"<br><b>Name: </b>" + a['0'][i]['fields']['stand_name'] +
-                "<br><b>Free bikes: </b> " + a['0'][i]['fields']['available_bikes'] + "<hr><b>Total stands: </b>" + a['0'][i]['fields']['total_bike_stands'] +
-                "<hr><b>Free stands: </b> " + a['0'][i]['fields']['available_bike_stands'] + "<hr><b>Updated: </b>" + a['0'][i]['fields']['last_update'] +
-                "<hr><b>Position: </b>" + lat + lng + "<hr>"+
-                 "<hr><b>Distance: </b>" +a['0'][i]['distance'] +"<hr>"
-                +"<br><button class='btn btn-primary' onclick=\"route_to_station(" + position.coords.latitude + "," + position.coords.longitude + "," + lat + "," + lng +")\">Route to here</button>");
-            }
-
-
-            if (x !== '') {
-                L.Routing.control({
-                        waypoints: [L.latLng(users_lat_coords, users_lng_coords), L.latLng(x, y)],
-                        lineOptions: {addWaypoints: false}
-                    }
-                ).addTo(map);
+                dataSet.push(row);
+                //create the marker for the bike station
+                L.marker([lat, lng]).addTo(map).bindPopup("<hr><b>Number: </b>" + a['0'][i]['pk'] + "<br><b>Name: </b>" + a['0'][i]['fields']['stand_name'] +
+                    "<br><b>Free bikes: </b> " + a['0'][i]['fields']['available_bikes'] + "<hr><b>Total stands: </b>" + a['0'][i]['fields']['total_bike_stands'] +
+                    "<hr><b>Free stands: </b> " + a['0'][i]['fields']['available_bike_stands'] + "<hr><b>Updated: </b>" +
+                    "<hr><b>Distance: </b>" + a['0'][i]['distance'] + "<hr>"
+                    + "<br><button class='btn btn-primary' onclick=\"route_to_station(" + position.coords.latitude + "," + position.coords.longitude + "," + lat + "," + lng + ")\">Route to here</button>");
             }
 
                         //Data table displaying to the user
@@ -156,7 +146,8 @@ let dataSet = [];
     //Change the users marker to a unique red & show users location
     //
 
-};
+}
+
 
 var users_lat_coords ='';
 var users_lng_coords ='';
